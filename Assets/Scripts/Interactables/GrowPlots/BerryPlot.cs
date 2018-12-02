@@ -11,9 +11,4 @@ public class BerryPlot : GrowingPlot {
         harvest = new Berry();
         seedtype = new BerrySeed();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

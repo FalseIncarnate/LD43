@@ -11,9 +11,4 @@ public class GrainPlot : GrowingPlot {
         harvest = new Grain();
         seedtype = new GrainSeed();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

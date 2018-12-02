@@ -14,11 +14,6 @@ public class BeePlot : GrowingPlot {
         harvest = new Beeswax();
         honey_recipe = new CollectHoneyRecipe();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     internal override void Attempt_Growth() {
         if(grow_progress >= 10) {
@@ -96,13 +91,23 @@ public class BeePlot : GrowingPlot {
     }
 
     internal override void UpdateMenu() {
+        gm.SetText1("Harvest");
+        gm.SetText2("Collect Honey (requires 1 Glassware)");
+        gm.SetText3("");
+        gm.SetText4("");
+        gm.SetText5("");
+        gm.SetText6("Clear Plot");
+    }
 
+    internal override bool AttemptInteract() {
+        return true;
     }
 
     internal override void HandleMenuOption(int option) {
         switch(option) {
             case 1:
                 //Harvest Beeswax
+                gm.player.CloseMenu();
                 if(grow_progress >= HARVEST_STAGE) {
                     DoHarvest();
                 }
@@ -128,7 +133,12 @@ public class BeePlot : GrowingPlot {
 
     internal void HarvestHoney() {
         if(honey_recipe.CheckRequirements(inv)){
-            honey_recipe.CreateResult(inv);
+            StartActivity("Collecting Honey");
         }
+    }
+
+    internal override void ActivityFinish() {
+        base.ActivityFinish();
+        honey_recipe.CreateResult(inv);
     }
 }

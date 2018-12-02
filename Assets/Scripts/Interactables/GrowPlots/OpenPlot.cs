@@ -20,6 +20,7 @@ public class OpenPlot : Interactable_Object {
     internal CraftRecipe make_grain_recipe;
     public GameObject grain_plot_prefab;
 
+
     // Use this for initialization
     void Start () {
         object_name = "Farm Plot";
@@ -30,14 +31,18 @@ public class OpenPlot : Interactable_Object {
         make_cotton_recipe = new BuildCottonRecipe();
         make_grain_recipe = new BuildGrainRecipe();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    internal override bool AttemptInteract() {
+        return true;
+    }
 
     internal override void UpdateMenu() {
-        
+        gm.SetText1("Build Beehive (requires 5 Wood)");
+        gm.SetText2("Plant Berries (requires 1 Berry Seed)");
+        gm.SetText3("Plant Corn (requires 1 Corn Seed)");
+        gm.SetText4("Plant Cotton (requires 1 Cotton Seed)");
+        gm.SetText5("Plant Grain (requires 1 Grain Seed)");
+        gm.SetText6("");
     }
 
     internal override void HandleMenuOption(int option) {
@@ -72,6 +77,7 @@ public class OpenPlot : Interactable_Object {
         if(make_bee_recipe.CheckRequirements(inv)) {
             make_bee_recipe.ConsumeCost(inv);
             Instantiate(bee_plot_prefab, transform.position, Quaternion.identity);
+            gm.player.CloseMenu();
             gameObject.SetActive(false);
             Destroy(gameObject);
         }
@@ -81,6 +87,7 @@ public class OpenPlot : Interactable_Object {
         if(make_berry_recipe.CheckRequirements(inv)) {
             make_berry_recipe.ConsumeCost(inv);
             Instantiate(berry_plot_prefab, transform.position, Quaternion.identity);
+            gm.player.CloseMenu();
             gameObject.SetActive(false);
             Destroy(gameObject);
         }
@@ -90,6 +97,7 @@ public class OpenPlot : Interactable_Object {
         if(make_corn_recipe.CheckRequirements(inv)) {
             make_corn_recipe.ConsumeCost(inv);
             Instantiate(corn_plot_prefab, transform.position, Quaternion.identity);
+            gm.player.CloseMenu();
             gameObject.SetActive(false);
             Destroy(gameObject);
         }
@@ -99,6 +107,7 @@ public class OpenPlot : Interactable_Object {
         if(make_cotton_recipe.CheckRequirements(inv)) {
             make_cotton_recipe.ConsumeCost(inv);
             Instantiate(cotton_plot_prefab, transform.position, Quaternion.identity);
+            gm.player.CloseMenu();
             gameObject.SetActive(false);
             Destroy(gameObject);
         }
@@ -108,6 +117,7 @@ public class OpenPlot : Interactable_Object {
         if(make_grain_recipe.CheckRequirements(inv)) {
             make_grain_recipe.ConsumeCost(inv);
             Instantiate(grain_plot_prefab, transform.position, Quaternion.identity);
+            gm.player.CloseMenu();
             gameObject.SetActive(false);
             Destroy(gameObject);
         }

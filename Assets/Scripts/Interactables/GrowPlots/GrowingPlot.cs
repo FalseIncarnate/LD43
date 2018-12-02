@@ -24,18 +24,12 @@ public class GrowingPlot : Interactable_Object {
     public Product harvest;
     public Product seedtype;
 
-    internal CraftRecipe water_crops_recipe;
+    internal CraftRecipe water_crops_recipe = new WaterCropsRecipe();
 
     // Use this for initialization
     void Start () {
         object_name = "Growing Plot";
         StartCoroutine(GrowDelay(grow_interval));
-        water_crops_recipe = new WaterCropsRecipe();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
     internal IEnumerator GrowDelay(float seconds) {
@@ -167,6 +161,7 @@ public class GrowingPlot : Interactable_Object {
 
     internal void GoBarren() {
         Instantiate(empty_plot, transform.position, Quaternion.identity);
+        gm.player.CloseMenu();
         gameObject.SetActive(false);
         Destroy(gameObject);
     }
@@ -196,13 +191,23 @@ public class GrowingPlot : Interactable_Object {
     }
 
     internal override void UpdateMenu() {
+        gm.SetText1("Harvest");
+        gm.SetText2("Water Crops (requires 1 Water Bucket)");
+        gm.SetText3("");
+        gm.SetText4("");
+        gm.SetText5("");
+        gm.SetText6("Clear Plot");
+    }
 
+    internal override bool AttemptInteract() {
+        return true; ;
     }
 
     internal override void HandleMenuOption(int option) {
         switch(option) {
             case 1:
                 //Harvest
+                gm.player.CloseMenu();
                 if(grow_progress >= HARVEST_STAGE) {
                     DoHarvest();
                 }
@@ -221,7 +226,7 @@ public class GrowingPlot : Interactable_Object {
                 //Blank
                 break;
             case 6:
-                //Remove Crop
+                //Clear Plot
                 GoBarren();
                 break;
         }
@@ -238,5 +243,6 @@ public class GrowingPlot : Interactable_Object {
         } else {
             sr.sprite = GROW_SPRITE;
         }
+        gm.player.CloseMenu();
     }
 }

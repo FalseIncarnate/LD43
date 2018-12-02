@@ -115,20 +115,25 @@ public class Inventory : MonoBehaviour
             return true;
         }
 
-        bool have_enough = false;
+        bool have_all = true;
         foreach(Requirement req_entry in recipe.requirements) {
             Product thing_needed = req_entry.product_required;
             int num_needed = req_entry.num_needed;
+            bool have_this = false;
             foreach(InvEntry ie in my_inv) {
                 if(ie.product_data.GetType() == thing_needed.GetType()) {
                     if(ie.product_owned >= num_needed) {
-                        have_enough = true;
+                        have_this = true;
                         break;
                     }
                 }
             }
+            if(!have_this) {
+                have_all = false;
+                break;
+            }
         }
-        return have_enough;
+        return have_all;
     }
 
     internal void UpdateItemCount(Product thing_to_update, int num_change) {

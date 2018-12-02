@@ -10,10 +10,5 @@ public class CottonPlot : GrowingPlot {
         StartCoroutine(GrowDelay(grow_interval));
         harvest = new Cotton();
         seedtype = new CottonSeed();
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

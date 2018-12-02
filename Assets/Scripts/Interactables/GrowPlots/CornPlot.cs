@@ -10,10 +10,5 @@ public class CornPlot : GrowingPlot {
         StartCoroutine(GrowDelay(grow_interval));
         harvest = new Corn();
         seedtype = new CornSeed();
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

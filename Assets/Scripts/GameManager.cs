@@ -29,6 +29,17 @@ public class GameManager : MonoBehaviour {
     public GameObject favor_menu_layout;
     public Text favor_list;
 
+    public GameObject action_menu_layout;
+    public Text action_text;
+    public Text action_progress;
+
+    internal bool doing_activity = false;
+    internal int activity_step_count = 0;
+
+    internal PlayerControl player;
+
+    public Sprite[] counter_sprites;
+
     // Use this for initialization
     void Start () {
         menu_ui = GameObject.Find("Menu_UI");

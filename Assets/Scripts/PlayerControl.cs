@@ -29,14 +29,18 @@ public class PlayerControl : MonoBehaviour {
     // Use this for initialization
     void Start () {
         gm = FindObjectOfType<GameManager>();
+        gm.player = this;
         pause_menu = GameObject.Find("Pause_Menu_Holder").GetComponent<Interactable_Object>();
-        print(pause_menu);
+        //print(pause_menu);
         sr = transform.GetComponent<SpriteRenderer>();
         inv = transform.GetComponent<Inventory>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if(gm.doing_activity) {
+            return;
+        }
         if(in_menu) {
             if(Input.GetKeyDown("1")) {
                 MenuOption(1);
@@ -196,7 +200,9 @@ public class PlayerControl : MonoBehaviour {
             return;
         }
         cur_menu_target = io;
-        io.AttemptInteract(inv);
+        if(io.AttemptInteract()) {
+            ShowMenu();
+        }
     }
 
     void MenuOption(int option) {
@@ -213,19 +219,21 @@ public class PlayerControl : MonoBehaviour {
         cur_menu_target.HandleMenuOption(option);
     }
 
-    void CloseMenu() {
-        cur_menu_target.PreClose();
+    internal void CloseMenu() {
+        if(cur_menu_target != null) {
+            cur_menu_target.PreClose();
+        }
         in_menu = false;
         cur_menu_target = null;
         gm.ToggleMenuVisibility(false);
-        print("Closing menu");
+        //print("Closing menu");
     }
 
-    void ShowMenu() {
+    internal void ShowMenu() {
         in_menu = true;
         cur_menu_target.UpdateMenu();
         gm.ToggleMenuVisibility(true);
-        print("Showing menu");
+        //print("Showing menu");
     }
 
 }

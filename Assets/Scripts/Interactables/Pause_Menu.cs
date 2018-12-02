@@ -18,7 +18,12 @@ public class Pause_Menu : Interactable_Object {
     }
 
     internal override void UpdateMenu() {
-        
+        gm.SetText1("View Inventory");
+        gm.SetText2("View Favor");
+        gm.SetText3("");
+        gm.SetText4("");
+        gm.SetText5("");
+        gm.SetText6("");
     }
 
     internal override void HandleMenuOption(int option) {
@@ -26,9 +31,10 @@ public class Pause_Menu : Interactable_Object {
             case 1:
                 if(showing_inventory) {
                     PrevCategory();
-
+                }else if(showing_favor) {
+                    UpdateFavorMenu();
                 } else {
-                    //thing
+                    //Inventory
                     OpenInventory();
                 }
                 break;
@@ -38,14 +44,15 @@ public class Pause_Menu : Interactable_Object {
                 } else if(showing_favor) {
                     CloseFavor();
                 } else {
-                    //thing
+                    //Favor
+                    OpenFavor();
                 }
                 break;
             case 3:
                 if(showing_inventory) {
                     NextCategory();
                 } else {
-                    //thing
+                    //Blank
                 }
                 break;
             case 4:
@@ -180,6 +187,18 @@ public class Pause_Menu : Interactable_Object {
     }
 
     void UpdateFavorMenu() {
+        gm.favor_list.text = "";
+        gm.favor_list.text += ("Produce Spirit's Favor: " + gm.produce_spirit_favor);
+        gm.favor_list.text += System.Environment.NewLine;
+        gm.favor_list.text += ("Flesh Spirit's Favor: " + gm.flesh_spirit_favor);
+        gm.favor_list.text += System.Environment.NewLine;
+        gm.favor_list.text += ("Blood Spirit's Favor: " + gm.blood_spirit_favor);
+        gm.favor_list.text += System.Environment.NewLine;
+        gm.favor_list.text += ("Food Spirit's Favor: " + gm.food_spirit_favor);
+        gm.favor_list.text += System.Environment.NewLine;
+        gm.favor_list.text += ("Drink Spirit's Favor: " + gm.drink_spirit_favor);
+        gm.favor_list.text += System.Environment.NewLine;
+        gm.favor_list.text += ("Craft Spirit's Favor: " + gm.craft_spirit_favor);
 
     }
 
@@ -187,10 +206,12 @@ public class Pause_Menu : Interactable_Object {
         gm.basic_menu_layout.SetActive(false);
         gm.favor_menu_layout.SetActive(true);
         UpdateFavorMenu();
+        showing_favor = true;
     }
 
     void CloseFavor() {
         gm.favor_menu_layout.SetActive(false);
         gm.basic_menu_layout.SetActive(true);
+        showing_favor = false;
     }
 }
