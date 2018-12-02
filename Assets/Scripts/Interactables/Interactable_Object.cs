@@ -19,14 +19,25 @@ public class Interactable_Object : MonoBehaviour {
     public Sprite T3_SPRITE;
     public Sprite T4_SPRITE;
 
+    internal GameManager gm;
     internal SpriteRenderer sr;
-
+    internal Inventory inv;
+    
     internal bool requires_fishing_rod = false;
     internal bool requires_pickaxe = false;
 
     // Use this for initialization
     void Start () {
+        gm = FindObjectOfType<GameManager>();
         sr = transform.GetComponent<SpriteRenderer>();
+        inv = GameObject.Find("Player_Char").GetComponent<Inventory>();
+
+        if(!can_upgrade) {
+            T1_SPRITE = T0_SPRITE;
+            T2_SPRITE = T0_SPRITE;
+            T3_SPRITE = T0_SPRITE;
+            T4_SPRITE = T0_SPRITE;
+        }
 	}
 	
 	// Update is called once per frame
@@ -35,7 +46,7 @@ public class Interactable_Object : MonoBehaviour {
 	}
 
     internal void AttemptInteract(Inventory inv) {
-        
+        print("Interact attempt with " + object_name);
     }
 
     internal void AttemptUpgrade(Inventory inv) {
@@ -58,7 +69,7 @@ public class Interactable_Object : MonoBehaviour {
         OnUpgrade();
     }
 
-    internal void OnUpgrade() {
+    internal virtual void OnUpgrade() {
         if(upgrade_level != max_upgrade_level) {
             upgrade_recipe = upgrade_list[upgrade_level - 1];
         }
@@ -79,5 +90,36 @@ public class Interactable_Object : MonoBehaviour {
                 sr.sprite = T4_SPRITE;
                 break;
         }
+    }
+
+    internal virtual void UpdateMenu() {
+        gm.ToggleMenuVisibility(true);
+    }
+
+    internal virtual void HandleMenuOption(int option) {
+        switch(option) {
+            case 1:
+                //thing
+                break;
+            case 2:
+                //thing
+                break;
+            case 3:
+                //thing
+                break;
+            case 4:
+                //thing
+                break;
+            case 5:
+                //thing
+                break;
+            case 6:
+                //thing
+                break;
+        }
+    }
+
+    internal virtual void PreClose() {
+
     }
 }

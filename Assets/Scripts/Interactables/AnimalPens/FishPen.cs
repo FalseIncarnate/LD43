@@ -25,7 +25,7 @@ public class FishPen : AnimalPen {
 		
 	}
 
-    void OnUpgrade() {
+    internal override void OnUpgrade() {
         base.OnUpgrade();
         switch(upgrade_level) {
             case 0:

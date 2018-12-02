@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: e56761d3fd682dc49a7c5d0aae94f045
+timeCreated: 1543700982
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - T0_SPRITE: {fileID: 21300000, guid: 4932fc0c217d25741981e0cd050b8634, type: 3}
+  - T1_SPRITE: {fileID: 21300000, guid: 4932fc0c217d25741981e0cd050b8634, type: 3}
+  - T2_SPRITE: {fileID: 21300000, guid: 4932fc0c217d25741981e0cd050b8634, type: 3}
+  - T3_SPRITE: {fileID: 21300000, guid: 4932fc0c217d25741981e0cd050b8634, type: 3}
+  - T4_SPRITE: {fileID: 21300000, guid: 4932fc0c217d25741981e0cd050b8634, type: 3}
+  - empty_plot: {fileID: 1406267567761870, guid: 3e235daa71fb99c4485ec9a036a99285,
+      type: 2}
+  - GROW_SPRITE: {fileID: 21300000, guid: 4932fc0c217d25741981e0cd050b8634, type: 3}
+  - DRY_SPRITE: {fileID: 21300000, guid: 4932fc0c217d25741981e0cd050b8634, type: 3}
+  - HARVEST_SPRITE: {fileID: 21300000, guid: 4932fc0c217d25741981e0cd050b8634, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

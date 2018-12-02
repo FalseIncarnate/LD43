@@ -5,7 +5,17 @@ licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - T0_SPRITE: {fileID: 21300000, guid: d48334e90283b3144b1819140613e1f8, type: 3}
+  - T1_SPRITE: {fileID: 21300000, guid: d48334e90283b3144b1819140613e1f8, type: 3}
+  - T2_SPRITE: {fileID: 21300000, guid: d48334e90283b3144b1819140613e1f8, type: 3}
+  - T3_SPRITE: {fileID: 21300000, guid: d48334e90283b3144b1819140613e1f8, type: 3}
+  - T4_SPRITE: {fileID: 21300000, guid: d48334e90283b3144b1819140613e1f8, type: 3}
+  - empty_plot: {fileID: 1406267567761870, guid: 3e235daa71fb99c4485ec9a036a99285,
+      type: 2}
+  - GROW_SPRITE: {fileID: 21300000, guid: d48334e90283b3144b1819140613e1f8, type: 3}
+  - DRY_SPRITE: {fileID: 21300000, guid: 681589a01ba364b43b066722ed87a675, type: 3}
+  - HARVEST_SPRITE: {fileID: 21300000, guid: e86ec7dbabae4a6478344061f1315aae, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

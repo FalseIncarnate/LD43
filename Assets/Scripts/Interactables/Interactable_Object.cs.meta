@@ -5,7 +5,13 @@ licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - T0_SPRITE: {instanceID: 0}
+  - T1_SPRITE: {instanceID: 0}
+  - T2_SPRITE: {instanceID: 0}
+  - T3_SPRITE: {instanceID: 0}
+  - T4_SPRITE: {instanceID: 0}
+  - menu_ui: {fileID: 1384336808265832, guid: 0828d82ec286bad4f8ff4a810f383aa2, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

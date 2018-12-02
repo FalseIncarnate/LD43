@@ -290,10 +290,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CraftRecipes\CraftRecipe.cs" />
+    <Compile Include="Assets\Scripts\CraftRecipes\Crops\BuildBeeRecipe.cs" />
+    <Compile Include="Assets\Scripts\CraftRecipes\Crops\BuildBerryRecipe.cs" />
+    <Compile Include="Assets\Scripts\CraftRecipes\Crops\BuildCornRecipe.cs" />
+    <Compile Include="Assets\Scripts\CraftRecipes\Crops\BuildCottonRecipe.cs" />
+    <Compile Include="Assets\Scripts\CraftRecipes\Crops\BuildGrainRecipe.cs" />
+    <Compile Include="Assets\Scripts\CraftRecipes\Crops\WaterCropsRecipe.cs" />
+    <Compile Include="Assets\Scripts\CraftRecipes\Food\CollectHoneyRecipe.cs" />
     <Compile Include="Assets\Scripts\CraftRecipes\Upgrades\AnimalPens\FishUpgrade1.cs" />
     <Compile Include="Assets\Scripts\CraftRecipes\Upgrades\AnimalPens\FishUpgrade2.cs" />
     <Compile Include="Assets\Scripts\CraftRecipes\Upgrades\AnimalPens\FishUpgrade3.cs" />
     <Compile Include="Assets\Scripts\CraftRecipes\Upgrades\AnimalPens\FishUpgrade4.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Interactables\AnimalPen.cs" />
     <Compile Include="Assets\Scripts\Interactables\AnimalPens\ChickenPen.cs" />
     <Compile Include="Assets\Scripts\Interactables\AnimalPens\CowPen.cs" />
@@ -303,12 +311,14 @@
     <Compile Include="Assets\Scripts\Interactables\GrowPlots\CornPlot.cs" />
     <Compile Include="Assets\Scripts\Interactables\GrowPlots\CottonPlot.cs" />
     <Compile Include="Assets\Scripts\Interactables\GrowPlots\GrainPlot.cs" />
+    <Compile Include="Assets\Scripts\Interactables\GrowPlots\GrowingPlot.cs" />
     <Compile Include="Assets\Scripts\Interactables\GrowPlots\OpenPlot.cs" />
     <Compile Include="Assets\Scripts\Interactables\Interactable_Object.cs" />
     <Compile Include="Assets\Scripts\Interactables\Markets\CraftFair.cs" />
     <Compile Include="Assets\Scripts\Interactables\Markets\ProduceStand.cs" />
     <Compile Include="Assets\Scripts\Interactables\Markets\Restaurant.cs" />
     <Compile Include="Assets\Scripts\Interactables\Markets\SupplyShop.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Pause_Menu.cs" />
     <Compile Include="Assets\Scripts\Interactables\ResourceNodes\CoalMine.cs" />
     <Compile Include="Assets\Scripts\Interactables\ResourceNodes\MetalMine.cs" />
     <Compile Include="Assets\Scripts\Interactables\ResourceNodes\Well.cs" />

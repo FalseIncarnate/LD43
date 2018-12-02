@@ -18,17 +18,50 @@ public class PlayerControl : MonoBehaviour {
     protected int cur_face_dir = SOUTH;
     protected Vector3 move_goal = Vector3.zero;
 
+    protected bool in_menu = false;
+    internal Interactable_Object cur_menu_target;
+
+    protected GameManager gm;
+    protected Interactable_Object pause_menu;
     protected SpriteRenderer sr;
     protected Inventory inv;
 
     // Use this for initialization
     void Start () {
+        gm = FindObjectOfType<GameManager>();
+        pause_menu = GameObject.Find("Pause_Menu_Holder").GetComponent<Interactable_Object>();
+        print(pause_menu);
         sr = transform.GetComponent<SpriteRenderer>();
         inv = transform.GetComponent<Inventory>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if(in_menu) {
+            if(Input.GetKeyDown("1")) {
+                MenuOption(1);
+            }
+            if(Input.GetKeyDown("2")) {
+                MenuOption(2);
+            }
+            if(Input.GetKeyDown("3")) {
+                MenuOption(3);
+            }
+            if(Input.GetKeyDown("4")) {
+                MenuOption(4);
+            }
+            if(Input.GetKeyDown("5")) {
+                MenuOption(5);
+            }
+            if(Input.GetKeyDown("6")) {
+                MenuOption(6);
+            }
+            if(Input.GetKeyDown("escape")) {
+                MenuOption(-1);
+            }
+            return;
+        }
+
         if(!is_moving) {
             if(Input.GetKey("w")) {
                 MoveCharacter(NORTH);
@@ -62,6 +95,12 @@ public class PlayerControl : MonoBehaviour {
         if(Input.GetKeyDown("e")) {
             Interact();
         }
+
+        if(Input.GetKeyDown("escape")) {
+            cur_menu_target = pause_menu;
+            ShowMenu();
+        }
+
     }
 
     void MoveCharacter(int dir) {
@@ -153,7 +192,40 @@ public class PlayerControl : MonoBehaviour {
             return;
         }
         Interactable_Object io = target.GetComponent<Interactable_Object>();
+        if(io == null) {
+            return;
+        }
+        cur_menu_target = io;
         io.AttemptInteract(inv);
+    }
+
+    void MenuOption(int option) {
+        if(!in_menu) {
+            return;
+        }
+        if(option == -1) {
+            CloseMenu();
+            return;
+        }
+        if(option < 1 || option > 6) {
+            return;
+        }
+        cur_menu_target.HandleMenuOption(option);
+    }
+
+    void CloseMenu() {
+        cur_menu_target.PreClose();
+        in_menu = false;
+        cur_menu_target = null;
+        gm.ToggleMenuVisibility(false);
+        print("Closing menu");
+    }
+
+    void ShowMenu() {
+        in_menu = true;
+        cur_menu_target.UpdateMenu();
+        gm.ToggleMenuVisibility(true);
+        print("Showing menu");
     }
 
 }

@@ -4,20 +4,10 @@ using UnityEngine;
 
 public class CraftRecipe {
 
-    internal List<Requirement> requirements;
+    internal List<Requirement> requirements = new List<Requirement>();
     protected Product product;
     internal int money_cost = 0;
-
-    // Use this for initialization
-    void Start () {
-        // requirements.Add(new Requirement() { product_required = new Product(), num_needed = 1 });
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
+    
     internal bool CheckRequirements(Inventory inv) {
         if(money_cost > 0 && (money_cost > inv.money)) {
             return false;
