@@ -96,7 +96,7 @@ public class Inventory : MonoBehaviour
     }
 
     void BuildResourceList() {
-        my_inv.Add(new InvEntry() { product_data = new Blood(), product_owned = 0, category = "Resource" });
+        my_inv.Add(new InvEntry() { product_data = new Blood(), product_owned = 5, category = "Resource" });
         my_inv.Add(new InvEntry() { product_data = new Wood(), product_owned = 0, category = "Resource" });
         my_inv.Add(new InvEntry() { product_data = new Ore(), product_owned = 0, category = "Resource" });
         my_inv.Add(new InvEntry() { product_data = new MetalBars(), product_owned = 0, category = "Resource" });
@@ -149,10 +149,42 @@ public class Inventory : MonoBehaviour
 
     }
 
+    internal bool HaveItem(Product thing_to_check) {
+        if(thing_to_check == null) {
+            return false;
+        }
+        bool have_this = false;
+        foreach(InvEntry ie in my_inv) {
+            if(ie.product_data.GetType() == thing_to_check.GetType()) {
+                if(ie.product_owned > 0) {
+                    have_this = true;
+                    break;
+                }
+            }
+        }
+        return have_this;
+    }
+
     internal void UpdateMoney(int change) {
         money += change;
     }
 
+
+    internal int GetBuyCost(Product thing) {
+        if(thing == null) {
+            return 0;
+        }
+        thing.CalcPrices();
+        return thing.buy_value;
+    }
+
+    internal int GetSellValue(Product thing) {
+        if(thing == null) {
+            return 0;
+        }
+        thing.CalcPrices();
+        return thing.sell_value;
+    }
 }
 
 public class InvEntry

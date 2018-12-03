@@ -78,6 +78,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e028fa00f0d77f47ad95cf52ed62e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  T0_SPRITE: {fileID: 21300000, guid: eeecf5c83796f9b4b84a1f8b350b53a3, type: 3}
+  T1_SPRITE: {fileID: 21300000, guid: eeecf5c83796f9b4b84a1f8b350b53a3, type: 3}
+  T2_SPRITE: {fileID: 21300000, guid: eeecf5c83796f9b4b84a1f8b350b53a3, type: 3}
+  T3_SPRITE: {fileID: 21300000, guid: eeecf5c83796f9b4b84a1f8b350b53a3, type: 3}
+  T4_SPRITE: {fileID: 21300000, guid: eeecf5c83796f9b4b84a1f8b350b53a3, type: 3}
 --- !u!212 &212302979917629556
 SpriteRenderer:
   m_ObjectHideFlags: 1

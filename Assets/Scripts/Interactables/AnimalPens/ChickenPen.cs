@@ -20,8 +20,7 @@ public class ChickenPen : AnimalPen {
 
     internal override void SetupUpgrades() {
         base.SetupUpgrades();
-
-        upgrade_list = new List<CraftRecipe>();
+        
         upgrade_list.Add(new ChickenUpgrade1());
         upgrade_list.Add(new ChickenUpgrade2());
         upgrade_list.Add(new ChickenUpgrade3());
@@ -59,7 +58,7 @@ public class ChickenPen : AnimalPen {
     internal override void UpdateMenu() {
         gm.SetText1("Butcher Chicken");
         gm.SetText2("Search for Eggs (chance)");
-        gm.SetText3("Feed (requires 1 Corn");
+        gm.SetText3("Feed" + System.Environment.NewLine + "(requires 1 Corn)");
         gm.SetText4("");
         gm.SetText5("Upgrade " + GenUpgradeReqString(upgrade_recipe));
         gm.SetText6("");
@@ -109,8 +108,11 @@ public class ChickenPen : AnimalPen {
         }
     }
 
-    internal override void ButcherAnimal() {
+    internal override void ButcherAnimal(bool meddle = false) {
         base.ButcherAnimal();
+        if(meddle) {
+            return;
+        }
         inv.UpdateItemCount(chicken_meat, 1);
         if(50 >= (int)Random.Range(0, 100)) {
             inv.UpdateItemCount(blood, 1);

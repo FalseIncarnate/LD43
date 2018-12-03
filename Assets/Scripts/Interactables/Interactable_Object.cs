@@ -8,7 +8,7 @@ public class Interactable_Object : MonoBehaviour {
 
     internal bool can_upgrade = false;
 
-    public List<CraftRecipe> upgrade_list;
+    public List<CraftRecipe> upgrade_list = new List<CraftRecipe>();
     internal CraftRecipe upgrade_recipe;
     internal int upgrade_level = 0;
     internal int max_upgrade_level = 0;
@@ -30,6 +30,9 @@ public class Interactable_Object : MonoBehaviour {
 
     internal bool doing_activity = false;
 
+    internal int fuel_level = 0;
+    internal const int MAX_FUEL = 200;
+
     // Use this for initialization
     void Start() {
         
@@ -40,14 +43,10 @@ public class Interactable_Object : MonoBehaviour {
         sr = transform.GetComponent<SpriteRenderer>();
         inv = GameObject.Find("Player_Char").GetComponent<Inventory>();
 
-        if(!can_upgrade) {
-            T1_SPRITE = T0_SPRITE;
-            T2_SPRITE = T0_SPRITE;
-            T3_SPRITE = T0_SPRITE;
-            T4_SPRITE = T0_SPRITE;
-        }
-
         SetupUpgrades();
+        SetupRecipes();
+        SetupSacrifices();
+        SetupShop();
 
         is_set_up = true;
 	}
@@ -55,9 +54,21 @@ public class Interactable_Object : MonoBehaviour {
     internal virtual void SetupUpgrades() {
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    internal virtual void SetupRecipes() {
+
+    }
+
+    internal virtual void SetupSacrifices() {
+
+    }
+
+    internal virtual void SetupShop() {
+
+    }
+
+    // Update is called once per frame
+    void Update () {
         if(!is_set_up) {
             Setup();
         }
@@ -69,14 +80,14 @@ public class Interactable_Object : MonoBehaviour {
     }
 
     internal string GenUpgradeReqString(CraftRecipe upgrade_recipe) {
-        if(!can_upgrade) {
-            return "Can't Upgrade";
+        if(!can_upgrade || upgrade_recipe == null) {
+            return (System.Environment.NewLine + "(Can't Upgrade)");
         }
         if(upgrade_level == max_upgrade_level) {
-            return "Max Upgrade Level";
+            return (System.Environment.NewLine + "(Max Upgrade Level)");
         }
 
-        string req_string = "(requires";
+        string req_string = (System.Environment.NewLine + "(requires");
         foreach(Requirement req in upgrade_recipe.requirements) {
             req_string += (" " + req.num_needed + " " + req.product_required.product_name);
         }
@@ -88,29 +99,42 @@ public class Interactable_Object : MonoBehaviour {
         return req_string;
     }
 
+    internal string GenRecipeReqString(CraftRecipe craft_recipe) {
+        string req_string = (System.Environment.NewLine + "(requires");
+        foreach(Requirement req in craft_recipe.requirements) {
+            req_string += (" " + req.num_needed + " " + req.product_required.product_name);
+        }
+        if(craft_recipe.money_cost > 0) {
+            req_string += (" $" + craft_recipe.money_cost);
+        }
+        req_string += ")";
+
+        return req_string;
+    }
+
     internal void AttemptUpgrade() {
-        if(!can_upgrade) {
+        if(!can_upgrade || upgrade_recipe == null) {
             return;
         }
         if(upgrade_level == max_upgrade_level) {
             return;
         }
-        if(!inv.CheckRequiredItems(upgrade_recipe)) {
+        if(!upgrade_recipe.CheckRequirements(inv)) {
             return;
         }
         DoUpgrade();
-        return;
     }
 
     internal void DoUpgrade() {
         upgrade_recipe.ConsumeCost(inv);
         upgrade_level++;
         OnUpgrade();
+        gm.player.CloseMenu();
     }
 
     internal virtual void OnUpgrade() {
         if(upgrade_level != max_upgrade_level) {
-            upgrade_recipe = upgrade_list[upgrade_level - 1];
+            upgrade_recipe = upgrade_list[upgrade_level];
         }
         switch(upgrade_level) {
             case 0:
@@ -207,5 +231,23 @@ public class Interactable_Object : MonoBehaviour {
         gm.doing_activity = false;
 
         ActivityStep();
+    }
+
+    internal virtual void Tantrum() {
+        upgrade_recipe = upgrade_list[upgrade_level];
+        switch(upgrade_level) {
+            case 0:
+                sr.sprite = T0_SPRITE;
+                break;
+            case 1:
+                sr.sprite = T1_SPRITE;
+                break;
+            case 2:
+                sr.sprite = T2_SPRITE;
+                break;
+            case 3:
+                sr.sprite = T3_SPRITE;
+                break;
+        }
     }
 }

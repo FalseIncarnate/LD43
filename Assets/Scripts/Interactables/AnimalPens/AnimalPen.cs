@@ -136,8 +136,10 @@ public class AnimalPen : Interactable_Object
         StartCoroutine(MatureDelay(maturity_rate));
     }
 
-    internal virtual void ButcherAnimal() {
-        mature_animals--;
+    internal virtual void ButcherAnimal(bool meddle = false) {
+        if(mature_animals > 0) {
+            mature_animals--;
+        }
         UpdateCounter();
         StartCoroutine(MatureDelay(maturity_rate));
         gm.player.CloseMenu();

@@ -126,7 +126,8 @@ public class BeePlot : GrowingPlot {
                 //Blank
                 break;
             case 6:
-                //Blank
+                //Clear Plot
+                GoBarren();
                 break;
         }
     }

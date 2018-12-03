@@ -108,11 +108,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e90cd2b55c100498395fc7da93b02e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  T0_SPRITE: {fileID: 0}
-  T1_SPRITE: {fileID: 0}
-  T2_SPRITE: {fileID: 0}
-  T3_SPRITE: {fileID: 0}
-  T4_SPRITE: {fileID: 0}
+  T0_SPRITE: {fileID: 21300000, guid: 4cc4ec83aa03a324da5f95797de44310, type: 3}
+  T1_SPRITE: {fileID: 21300000, guid: 3514e29bf76eb704ab41220d8c13e477, type: 3}
+  T2_SPRITE: {fileID: 21300000, guid: cf43a11d8cbfdf7428444ffe428a7cf5, type: 3}
+  T3_SPRITE: {fileID: 21300000, guid: 64e740caa9670e2438d6566ebc1412a8, type: 3}
+  T4_SPRITE: {fileID: 21300000, guid: b60dd678e0e89124894ae530cb5311a6, type: 3}
   my_counter: {fileID: 1172951342291050}
 --- !u!212 &212434651944099722
 SpriteRenderer:

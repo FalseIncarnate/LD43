@@ -20,7 +20,6 @@ public class FishPen : AnimalPen {
     internal override void SetupUpgrades() {
         base.SetupUpgrades();
 
-        upgrade_list = new List<CraftRecipe>();
         upgrade_list.Add(new FishUpgrade1());
         upgrade_list.Add(new FishUpgrade2());
         upgrade_list.Add(new FishUpgrade3());
@@ -56,8 +55,8 @@ public class FishPen : AnimalPen {
     }
 
     internal override void UpdateMenu() {
-        gm.SetText1("Fish (requires fishing rod)");
-        gm.SetText2("Fill Bucket (requires 1 Empty Bucket)");
+        gm.SetText1("Fish" + System.Environment.NewLine + "(requires fishing rod)");
+        gm.SetText2("Fill Bucket" + GenRecipeReqString(fill_bucket_recipe));
         gm.SetText3("");
         gm.SetText4("Upgrade " + GenUpgradeReqString(upgrade_recipe));
         gm.SetText5("");
@@ -103,8 +102,11 @@ public class FishPen : AnimalPen {
         }
     }
 
-    internal override void ButcherAnimal() {
+    internal override void ButcherAnimal(bool meddle = false) {
         base.ButcherAnimal();
+        if(meddle) {
+            return;
+        }
         inv.UpdateItemCount(fish, 1);
         if(10 >= (int)Random.Range(0, 100)) {
             inv.UpdateItemCount(blood, 1);

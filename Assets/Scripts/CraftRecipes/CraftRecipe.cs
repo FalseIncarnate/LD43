@@ -5,7 +5,7 @@ using UnityEngine;
 public class CraftRecipe {
 
     internal List<Requirement> requirements = new List<Requirement>();
-    protected Product product;
+    internal Product product;
     internal int money_cost = 0;
     
     internal bool CheckRequirements(Inventory inv) {

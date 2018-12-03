@@ -21,7 +21,7 @@ public class Pause_Menu : Interactable_Object {
         gm.SetText1("View Inventory");
         gm.SetText2("View Favor");
         gm.SetText3("");
-        gm.SetText4("");
+        gm.SetText4("Money Owned: $" + inv.money);
         gm.SetText5("");
         gm.SetText6("");
     }

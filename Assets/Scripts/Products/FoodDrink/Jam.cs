@@ -7,7 +7,7 @@ public class Jam : Product
     public Jam () {
         product_name = "Jars of Jam";
 
-        sell_value = 40;
+        sell_value = 45;
 
         food_value = 30;
         craft_value = 40;

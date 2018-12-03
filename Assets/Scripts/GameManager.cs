@@ -12,6 +12,20 @@ public class GameManager : MonoBehaviour {
     internal int craft_spirit_favor = 300;
     internal int blood_spirit_favor = 300;
 
+    internal const int BAD_MEDDLE_LEVEL = 100;
+    internal const int GOOD_MEDDLE_LEVEL = 500;
+    internal const int MAX_FAVOR_LEVEL = 1000;
+    internal const int UPGRADE_FAVOR_BONUS = 50;
+
+    internal bool spirits_waiting = false;
+    internal const float SPIRIT_TIME = 600;
+
+    internal bool taxes_paid = true;
+    internal int taxes_due = 25;
+    internal const float TAX_TIME = 1800;
+    internal bool taxes_active = true;  //disable to disable taxation, if only it was this simple in real life...
+    internal bool taxes_pending = false;
+
     internal GameObject menu_ui;
 
     public GameObject basic_menu_layout;
@@ -45,6 +59,10 @@ public class GameManager : MonoBehaviour {
         menu_ui = GameObject.Find("Menu_UI");
         ClearAllText();
         ToggleMenuVisibility(false);
+        if(taxes_active) {
+            StartCoroutine(TaxSchedule(TAX_TIME));
+        }
+        StartCoroutine(SpiritSchedule(SPIRIT_TIME));
 	}
 	
 	// Update is called once per frame
@@ -126,4 +144,322 @@ public class GameManager : MonoBehaviour {
         SetText6("");
     }
 
+    internal IEnumerator SpiritSchedule(float seconds) {
+        if(spirits_waiting) {
+            yield break;
+        }
+
+        spirits_waiting = true;
+
+        yield return new WaitForSeconds(seconds);
+
+        spirits_waiting = false;
+
+        FavorDecay();
+        MeddleCheck();
+    }
+
+    internal void FavorDecay() {
+        //Spirit favor decays over time, each spirit's favor decays a random amount each time (between 0 and 100, in increments of 5, favor decay per interval)
+        int favor_decay_amount = 0;
+        //Food Spirit
+        favor_decay_amount = (int)Random.Range(0, 20) * 5;
+        food_spirit_favor = System.Math.Max(0, food_spirit_favor - favor_decay_amount);
+        //Drink Spirit
+        favor_decay_amount = (int)Random.Range(0, 20) * 5;
+        drink_spirit_favor = System.Math.Max(0, drink_spirit_favor - favor_decay_amount);
+        //Produce Spirit
+        favor_decay_amount = (int)Random.Range(0, 20) * 5;
+        produce_spirit_favor = System.Math.Max(0, produce_spirit_favor - favor_decay_amount);
+        //Flesh Spirit
+        favor_decay_amount = (int)Random.Range(0, 20) * 5;
+        flesh_spirit_favor = System.Math.Max(0, flesh_spirit_favor - favor_decay_amount);
+        //Craft Spirit
+        favor_decay_amount = (int)Random.Range(0, 20) * 5;
+        craft_spirit_favor = System.Math.Max(0, craft_spirit_favor - favor_decay_amount);
+        //Blood Spirit
+        favor_decay_amount = (int)Random.Range(0, 20) * 5;
+        blood_spirit_favor = System.Math.Max(0, blood_spirit_favor - favor_decay_amount);
+    }
+
+    internal void MeddleCheck() {
+        int random_spirit = 0;
+        random_spirit = (int)Random.Range(1, 6);
+        switch(random_spirit) {
+            case 1:
+                //Produce
+                ProduceMeddle();
+                break;
+            case 2:
+                //Flesh
+                FleshMeddle();
+                break;
+            case 3:
+                //Blood
+                BloodMeddle();
+                break;
+            case 4:
+                //Food
+                FoodMeddle();
+                break;
+            case 5:
+                //Drink
+                DrinkMeddle();
+                break;
+            case 6:
+                //Craft
+                break;
+        }
+        StartCoroutine(SpiritSchedule(SPIRIT_TIME));
+    }
+
+    internal void ProduceMeddle() {
+        if(produce_spirit_favor <= BAD_MEDDLE_LEVEL) {
+            if(67 >= (int)Random.Range(0, 100)) {
+                return;
+            } else {
+                //Shrine Downgrade
+                ProduceShrine shrine_target = GameObject.Find("Produce_Shrine").GetComponent<ProduceShrine>();
+                if(shrine_target.upgrade_level > 0) {
+                    shrine_target.Tantrum();
+                }
+            }
+        }
+    }
+
+    internal void FleshMeddle() {
+        if(flesh_spirit_favor <= BAD_MEDDLE_LEVEL) {
+            if(67 >= (int)Random.Range(0, 100)) {
+                return;
+            }
+            AnimalPen meddle_target = null;
+            int rand = (int)Random.Range(1, 4);
+            switch(rand) {
+                case 1:
+                    //Cow
+                    meddle_target = GameObject.Find("Cow_Pen").GetComponent<AnimalPen>();
+                    meddle_target.ButcherAnimal(true);
+                    break;
+                case 2:
+                    //Fish
+                    meddle_target = GameObject.Find("Fish_Pond").GetComponent<AnimalPen>();
+                    meddle_target.ButcherAnimal(true);
+                    break;
+                case 3:
+                    //Chicken
+                    meddle_target = GameObject.Find("Cow_Pen").GetComponent<AnimalPen>();
+                    meddle_target.ButcherAnimal(true);
+                    break;
+                case 4:
+                    //Shrine Downgrade
+                    BloodShrine shrine_target = GameObject.Find("Blood_Shrine").GetComponent<BloodShrine>();
+                    if(shrine_target.upgrade_level > 0) {
+                        shrine_target.Tantrum();
+                    }
+                    break;
+            }
+        }
+    }
+
+    internal void BloodMeddle() {
+        if(blood_spirit_favor <= BAD_MEDDLE_LEVEL) {
+            if(67 >= (int)Random.Range(0, 100)) {
+                return;
+            } else {
+                //Shrine Downgrade
+                BloodShrine shrine_target = GameObject.Find("Blood_Shrine").GetComponent<BloodShrine>();
+                if(shrine_target.upgrade_level > 0) {
+                    shrine_target.Tantrum();
+                }
+            }
+        }
+    }
+
+    internal void FoodMeddle() {
+        if(food_spirit_favor <= BAD_MEDDLE_LEVEL) {
+            if(67 >= (int)Random.Range(0, 100)) {
+                return;
+            }
+            int rand = (int)Random.Range(1, 4);
+            switch(rand) {
+                case 1:
+                    //Kitchen Downgrade
+                    Cooking cooking_target = GameObject.Find("Cooking").GetComponent<Cooking>();
+                    if(cooking_target.upgrade_level > 0) {
+                        cooking_target.upgrade_level--;
+                        cooking_target.OnUpgrade();
+                    }
+                    break;
+                case 2:
+                    //Steal Chicken Feed
+                    AnimalPen chicken_target = GameObject.Find("Chicken_Pen").GetComponent<AnimalPen>();
+                    chicken_target.fed_level--;
+                    chicken_target.CheckFedLevel();
+                    break;
+                case 3:
+                    //Steal Cow Feed
+                    AnimalPen cow_target = GameObject.Find("Cow_Pen").GetComponent<AnimalPen>();
+                    cow_target.fed_level--;
+                    cow_target.CheckFedLevel();
+                    break;
+                case 4:
+                    //Shrine Downgrade
+                    FoodShrine shrine_target = GameObject.Find("Food_Shrine").GetComponent<FoodShrine>();
+                    if(shrine_target.upgrade_level > 0) {
+                        shrine_target.Tantrum();
+                    }
+                    break;
+            }
+        }
+    }
+
+    internal void DrinkMeddle() {
+        if(drink_spirit_favor <= BAD_MEDDLE_LEVEL) {
+            if(67 >= (int)Random.Range(0, 100)) {
+                return;
+            } else {
+                //Shrine Downgrade
+                DrinkShrine shrine_target = GameObject.Find("Drink_Shrine").GetComponent<DrinkShrine>();
+                if(shrine_target.upgrade_level > 0) {
+                    shrine_target.Tantrum();
+                }
+            }
+        }
+    }
+
+    internal void CraftMeddle() {
+        if(craft_spirit_favor <= BAD_MEDDLE_LEVEL) {
+            if(67 >= (int)Random.Range(0, 100)) {
+                return;
+            } else {
+                //Shrine Downgrade
+                CraftShrine shrine_target = GameObject.Find("Craft_Shrine").GetComponent<CraftShrine>();
+                if(shrine_target.upgrade_level > 0) {
+                    shrine_target.Tantrum();
+                }
+            }
+        }
+    }
+
+    internal IEnumerator TaxSchedule(float seconds) {
+        if(taxes_active && taxes_pending) {
+            yield break;
+        }
+
+        taxes_pending = true;
+
+        yield return new WaitForSeconds(seconds);
+
+        taxes_pending = false;
+
+        DemandTaxes();
+    }
+
+    internal void DemandTaxes() {
+        if(!taxes_active) {
+            return;
+        }
+        if(!taxes_paid) {
+            SeizeProperty();
+            return;
+        }
+        if(taxes_due == 12800) {
+            TaxExempt();
+            return;
+        }
+        taxes_due *= 2;
+        taxes_paid = false;
+        TaxmanCometh();
+        StartCoroutine(TaxSchedule(TAX_TIME));
+    }
+
+    internal void SeizeProperty() {
+        //Defeat!
+        doing_activity = true;  //locks controls
+        action_menu_layout.SetActive(true);
+        action_text.text = "GAME OVER";
+        basic_menu_layout.SetActive(false);
+    }
+
+    internal void TaxExempt() {
+        //Victory!
+        taxes_active = false;
+    }
+
+    internal void TaxmanCometh() {
+        //Reactivate the taxman
+    }
+
+    internal void UpgradeFavor(string spirit) {
+        if(spirit == "") {
+            return;
+        }
+        UpdateFavor(spirit, UPGRADE_FAVOR_BONUS);
+    }
+
+    internal void UpdateFavor(string spirit, int value) {
+        if(spirit == "") {
+            return;
+        }
+        switch(spirit) {
+            case "Produce":
+                produce_spirit_favor = System.Math.Min(MAX_FAVOR_LEVEL, System.Math.Max(0, produce_spirit_favor + value));
+                break;
+            case "Flesh":
+                flesh_spirit_favor = System.Math.Min(MAX_FAVOR_LEVEL, System.Math.Max(0, flesh_spirit_favor + value));
+                break;
+            case "Blood":
+                blood_spirit_favor = System.Math.Min(MAX_FAVOR_LEVEL, System.Math.Max(0, blood_spirit_favor + value));
+                break;
+            case "Food":
+                food_spirit_favor = System.Math.Min(MAX_FAVOR_LEVEL, System.Math.Max(0, food_spirit_favor + value));
+                break;
+            case "Drink":
+                drink_spirit_favor = System.Math.Min(MAX_FAVOR_LEVEL, System.Math.Max(0, drink_spirit_favor + value));
+                break;
+            case "Craft":
+                craft_spirit_favor = System.Math.Min(MAX_FAVOR_LEVEL, System.Math.Max(0, craft_spirit_favor + value));
+                break;
+        }
+    }
+
+    internal bool CheckSpiritMaxed(string spirit) {
+        if(spirit == "") {
+            return true;
+        }
+        bool favor_maxed = false;
+        switch(spirit) {
+            case "Produce":
+                if(produce_spirit_favor >= MAX_FAVOR_LEVEL) {
+                    favor_maxed = true;
+                }
+                break;
+            case "Flesh":
+                if(flesh_spirit_favor >= MAX_FAVOR_LEVEL) {
+                    favor_maxed = true;
+                }
+                break;
+            case "Blood":
+                if(blood_spirit_favor >= MAX_FAVOR_LEVEL) {
+                    favor_maxed = true;
+                }
+                break;
+            case "Food":
+                if(food_spirit_favor >= MAX_FAVOR_LEVEL) {
+                    favor_maxed = true;
+                }
+                break;
+            case "Drink":
+                if(drink_spirit_favor >= MAX_FAVOR_LEVEL) {
+                    favor_maxed = true;
+                }
+                break;
+            case "Craft":
+                if(craft_spirit_favor >= MAX_FAVOR_LEVEL) {
+                    favor_maxed = true;
+                }
+                break;
+        }
+        return favor_maxed;
+    }
 }

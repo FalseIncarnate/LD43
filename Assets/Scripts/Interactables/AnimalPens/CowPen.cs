@@ -21,8 +21,7 @@ public class CowPen : AnimalPen {
 
     internal override void SetupUpgrades() {
         base.SetupUpgrades();
-
-        upgrade_list = new List<CraftRecipe>();
+        
         upgrade_list.Add(new CowUpgrade1());
         upgrade_list.Add(new CowUpgrade2());
         upgrade_list.Add(new CowUpgrade3());
@@ -59,8 +58,8 @@ public class CowPen : AnimalPen {
 
     internal override void UpdateMenu() {
         gm.SetText1("Butcher Cow");
-        gm.SetText2("Get Milk (requires 1 Empty Bucket)");
-        gm.SetText3("Feed (requires 1 Grain");
+        gm.SetText2("Get Milk" + GenRecipeReqString(milk_recipe));
+        gm.SetText3("Feed" + System.Environment.NewLine + "(requires 1 Grain)");
         gm.SetText4("");
         gm.SetText5("Upgrade " + GenUpgradeReqString(upgrade_recipe));
         gm.SetText6("");
@@ -111,8 +110,11 @@ public class CowPen : AnimalPen {
         milk_recipe.CreateResult(inv);
     }
 
-    internal override void ButcherAnimal() {
+    internal override void ButcherAnimal(bool meddle = false) {
         base.ButcherAnimal();
+        if(meddle) {
+            return;
+        }
         inv.UpdateItemCount(beef, 1);
         inv.UpdateItemCount(blood, 1);
         if(50 >= (int)Random.Range(0, 100)) {
