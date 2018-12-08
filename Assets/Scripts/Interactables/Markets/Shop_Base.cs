@@ -90,6 +90,8 @@ public class Shop_Base : Interactable_Object {
     }
 
     internal override bool AttemptInteract() {
+        menu_cat = 1;
+        menu_page = 1;
         return true;
     }
 
@@ -227,10 +229,21 @@ public class Shop_Base : Interactable_Object {
 
             }
         }
-        base.UpdateMenu();
+
+        gm.SetText1(option1);
+        gm.SetText2(option2);
+        gm.SetText3(option3);
+        gm.SetText4(option4);
+        gm.SetText5(option5);
+        gm.SetText6(option6);
     }
 
     internal virtual void DoShopAction(int num) {
+        if(menu_cat != 1 && num == 1) {
+            menu_cat = 1;
+            menu_page = 1;
+            UpdateMenu();
+        }
         if(menu_cat == 2) {
             //Buy
             AttemptSellToPlayer(num);

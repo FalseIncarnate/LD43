@@ -34,7 +34,7 @@ public class DrinkShrine : Shrine {
         option3 = "Offer Beer";
         option4 = "Offer Wine";
         option5 = "Offer Mead";
-        option6 = "Upgrade";
+        option6 = "Upgrade" + GenUpgradeReqString(upgrade_recipe);
     }
 
     internal override void HandleMenuOption(int option) {

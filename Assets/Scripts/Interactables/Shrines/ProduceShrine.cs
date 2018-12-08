@@ -33,7 +33,7 @@ public class ProduceShrine : Shrine {
         option3 = "Offer Cotton";
         option4 = "Offer Grain";
         option5 = "";
-        option6 = "Upgrade";
+        option6 = "Upgrade" + GenUpgradeReqString(upgrade_recipe);
     }
 
     internal override void HandleMenuOption(int option) {

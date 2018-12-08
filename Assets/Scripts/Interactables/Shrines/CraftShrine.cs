@@ -46,7 +46,7 @@ public class CraftShrine : Shrine {
         option3 = "Offer Furniture";
         option4 = "Offer Decorations";
         option5 = "";
-        option6 = "Upgrade";
+        option6 = "Upgrade" + GenUpgradeReqString(upgrade_recipe);
     }
 
     internal override void HandleMenuOption(int option) {

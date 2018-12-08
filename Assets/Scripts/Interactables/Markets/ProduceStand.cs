@@ -46,11 +46,11 @@ public class ProduceStand : Shop_Base {
     }
 
     internal override void SellMenu1() {
-        option1 = "Cancel Sell ($" + inv.GetSellValue(shop_buys[0]) + ")";
-        option2 = "Sell Berries ($" + inv.GetSellValue(shop_buys[1]) + ")";
-        option3 = "Sell Corn ($" + inv.GetSellValue(shop_buys[2]) + ")";
-        option4 = "Sell Cotton ($" + inv.GetSellValue(shop_buys[3]) + ")";
-        option5 = "Sell Grain ($" + inv.GetSellValue(shop_buys[4]) + ")";
+        option1 = "Cancel Sell";
+        option2 = "Sell Berries ($" + inv.GetSellValue(shop_buys[0]) + ")";
+        option3 = "Sell Corn ($" + inv.GetSellValue(shop_buys[1]) + ")";
+        option4 = "Sell Cotton ($" + inv.GetSellValue(shop_buys[2]) + ")";
+        option5 = "Sell Grain ($" + inv.GetSellValue(shop_buys[3]) + ")";
         option6 = "";
     }
 }

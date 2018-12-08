@@ -30,7 +30,7 @@ public class BloodShrine : Shrine {
         option3 = "";
         option4 = "";
         option5 = "";
-        option6 = "Upgrade";
+        option6 = "Upgrade" + GenUpgradeReqString(upgrade_recipe);
     }
 
     internal override void HandleMenuOption(int option) {
